@@ -23,7 +23,10 @@ app.get('/activitytracker',function(req,res){
    // res.send("Home page of Brainweckers");
 })
 
-
+app.get('/remindactivity',function(req,res){
+    res.sendFile(__dirname + "/remindactivity.html");
+   
+})
 app.get('/about',function(req,res){
     res.sendFile(__dirname + "/about.html");
    
