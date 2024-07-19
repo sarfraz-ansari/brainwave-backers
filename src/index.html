@@ -310,8 +310,10 @@
               </div>
             </div>
             <div class="btn-box">
-              <button type="submit" class="btn " onclick="callPythonFunction()">Click here to see the results</button>
+              <button type="button" class="btn" onClick="callpredictor()">Click here to see the results</button>
             </div>
+
+        
           </form>
         </div>
       </div>
@@ -913,7 +915,7 @@
   <script src="js/custom.js"></script>
 
 <script>
-async function callpredictor() {
+function callpredictor() {
 console.log("Entered callpredictor..")
   var age = document.getElementById('age').value;
 	var educ = document.getElementById('educ').value;
@@ -933,10 +935,10 @@ console.log("Entered callpredictor..")
     nwbv: nwbv,
   };
 
-  const url = 'https://jsonplaceholder.typicode.com/posts';
+  const url = 'http://169.38.96.219:5000/predict';
 
   try {
-    const response = await fetch(url, {
+    const response = fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -945,7 +947,7 @@ console.log("Entered callpredictor..")
     });
 
     if (response.ok) {
-      const result = await response.json();
+      const result = response.json();
       console.log('Predictor result:', result);
     } else {
       console.error('Error creating Predictor result:', response.status, response.statusText);
@@ -989,50 +991,9 @@ async function callapi2() {
   }
 }
 
-function callPythonFunction() {
-    // Get form elements
-    var age = document.getElementById('age').value;
-	var educ = document.getElementById('educ').value;
-	var ses = document.getElementById('ses').value;
-	var mmse = document.getElementById('mmse').value;
-  var cdr = document.getElementById('cdr').value;
-	var cmnts = document.getElementById('etiv').value;
-  var nwbv = document.getElementById('nwbv').value;
-  console.log("Test1");
-  const { spawn } = require('child_process');
-  const python = spawn('python3 -version');
-  console.log("Test3");
-    // Create data object
-    python.stdout.on('data', function (data) {
-        console.log('Pipe data from python script ...');
-        dataToSend = data.toString();
-       });
-       console.log("Test2");
-       python.on('close', (code) => {
-        console.log(`child process close all stdio with code ${code}`);
-        // send data to browser
-        res.send(dataToSend)
-        });
-        
-
-    // Send AJAX request to Python script
-    /*
-    fetch('/app.py', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    }); */
+function predictdem() {
+  window.location.href = "predict";
 }
-
 
 </script>
 
