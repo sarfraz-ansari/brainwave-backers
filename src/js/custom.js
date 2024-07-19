@@ -11,8 +11,12 @@ function callPythonFunction() {
 
     // Create data object
     var data = {
+        age: age,
         educ: educ,
-        ses: ses
+        ses: ses,
+        mmse: mmse,
+        cdr: cdr,
+        nwbv: nwbv,
     };
 
     // Send AJAX request to Python script
