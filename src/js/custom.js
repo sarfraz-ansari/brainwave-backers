@@ -8,18 +8,22 @@ function callPythonFunction() {
 	var cmnts = document.getElementById('etiv').value;
   var nwbv = document.getElementById('nwbv').value;
 
-
+  const python = spawn('python', ['/app.py']);
     // Create data object
-    var data = {
-        age: age,
-        educ: educ,
-        ses: ses,
-        mmse: mmse,
-        cdr: cdr,
-        nwbv: nwbv,
-    };
+    python.stdout.on('data', function (data) {
+        console.log('Pipe data from python script ...');
+        dataToSend = data.toString();
+       });
+
+       python.on('close', (code) => {
+        console.log(`child process close all stdio with code ${code}`);
+        // send data to browser
+        res.send(dataToSend)
+        });
+        
 
     // Send AJAX request to Python script
+    /*
     fetch('/app.py', {
         method: 'POST',
         headers: {
@@ -33,59 +37,5 @@ function callPythonFunction() {
     })
     .catch((error) => {
         console.error('Error:', error);
-    });
+    }); */
 }
-
-
-
-// to get current year
-function getYear() {
-    var currentDate = new Date();
-    var currentYear = currentDate.getFullYear();
-    document.querySelector("#displayYear").innerHTML = currentYear;
-}
-
-getYear();
-
-// nice select
-// $(document).ready(function () {
-//     $('select').niceSelect();
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
-    const selectElement = document.querySelector('select'); // Adjust the selector as needed
-    $(selectElement).niceSelect(); // Initialize niceSelect
-});
-
-// date picker
-$(function () {
-    $("#inputDate").datepicker({
-        autoclose: true,
-        todayHighlight: true
-    }).datepicker('update', new Date());
-});
-
-// owl carousel slider js
-$('.team_carousel').owlCarousel({
-    loop: true,
-    margin: 15,
-    dots: true,
-    autoplay: true,
-    navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-    ],
-    autoplayHoverPause: true,
-    responsive: {
-        0: {
-            items: 1,
-            margin: 0
-        },
-        576: {
-            items: 2,
-        },
-        992: {
-            items: 3
-        }
-    }
-})
