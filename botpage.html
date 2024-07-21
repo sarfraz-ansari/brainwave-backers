@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head class="head"></head>
+<title>Bot Builder</title>
+
+<link rel="stylesheet" type="'text/css" href="{{ url_for('static', filename='styles/chatbot.css') }}">
+<img src="{{ url_for( 'static', filename='images/logo.jpg') }}" class="logo" alt="Deutsche Bank" onclick="window.location.href='/'" style="cursor:pointer">
+</head>
+
+<body>
+    <h1>Bot Builder</h1>
+    <form id="chatbot-use">
+        <label for="'chatbot-name">ChatBot Name:</label><br>
+        <label type="text" id="chatbot-name" name=""chatbot-name"><br><br>
+        <input type="submit" value="Use the Bot!" id="submit-chatbot-name" class="button"></label>
+    </form>
+
+    <script>
+        document.getElementById('chatbot-use').addEventListener('submit', function (event) {
+           event.preventDefault();
+           botname = document.getElementById("chatbot-name").value
+           if (botname != ""){
+            window.open('/chatbot?bot=${botname}')
+            document.getElementById("chatbot-name").value = ""
+           }
+           else{alert("Botname cannot be empty")
+           }
+        });
+    </script>
+</body>
+</html>
